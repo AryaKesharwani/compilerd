@@ -141,6 +141,7 @@ const testCases = [
             error: 0,
         },
     },
+    // java test cases
     {
         name: 'java : print stdin',
         reqObject: {
@@ -179,6 +180,28 @@ const testCases = [
         },
         expectedResponse: {
             val: '1\n2\n3\n',
+            status: 200,
+            error: 0,
+        },
+    },
+    {
+        name: 'java : reverse array',
+        reqObject: {
+            language: 'java',
+            script: `
+                import java.util.Arrays;
+                import java.util.Collections;
+                public class Solution {
+                    public static void main(String[] args) {
+                        Integer[] arr = {1, 2, 3, 4, 5};
+                        Collections.reverse(Arrays.asList(arr));
+                        System.out.println(Arrays.toString(arr));
+                    }
+                }
+            `,
+        },
+        expectedResponse: {
+            val: '[5, 4, 3, 2, 1]\n',
             status: 200,
             error: 0,
         },
