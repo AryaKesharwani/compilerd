@@ -188,7 +188,7 @@ const testCases = [
         reqObject: {
             language: 'ruby',
             script:
-                'print "hello world"'
+                'print "hello world"',
         },
         expectedResponse: {
             val: 'hello world',
@@ -203,7 +203,7 @@ const testCases = [
             script:
                 'user_input = gets.chomp\n' +
                 'puts user_input',
-            stdin: '10\n'
+            stdin: '10\n',
         },
         expectedResponse: {
             val: '10\n',
@@ -294,6 +294,132 @@ const testCases = [
         },
         expectedResponse: {
             val: {},
+            status: 200,
+            error: 0,
+        },
+    },
+    // Perl test cases
+    {
+        name: 'perl: hello world',
+        reqObject: {
+            language: 'perl',
+            script: 'print "hello world\\n"',
+        },
+        expectedResponse: {
+            val: 'hello world\n',
+            status: 200,
+            error: 0,
+        },
+    },
+    {
+        name: 'perl: print stdin',
+        reqObject: {
+            language: 'perl',
+            script: 'while (<STDIN>) { print $_; }',
+            stdin: '1 2 3\n4 5 6',
+        },
+        expectedResponse: {
+            val: '1 2 3\n4 5 6',
+            status: 200,
+            error: 0,
+        },
+    },
+    {
+        name: 'perl: handle large input',
+        reqObject: {
+            language: 'perl',
+            script: `
+                use strict;
+                use warnings;
+                my $count = 0;
+                while (my $line = <STDIN>) {
+                    $count++;
+                }
+                print "Lines: $count\\n";
+            `,
+            stdin: '1\n'.repeat(1000), // Reduced to 1000 lines for practical testing
+        },
+        expectedResponse: {
+            val: 'Lines: 1000\n',
+            status: 200,
+            error: 0,
+        },
+    },
+    {
+        name: 'perl: error handling',
+        reqObject: {
+            language: 'perl',
+            script: 'die "Intentional error\\n";',
+        },
+        expectedResponse: {
+            val: 'Intentional error',
+            status: 200,
+            error: 1,
+        },
+    },
+
+    // TypeScript test cases
+    {
+        name: 'typescript: hello world',
+        reqObject: {
+            language: 'typescript',
+            script: 'console.log("hello world");',
+        },
+        expectedResponse: {
+            val: 'hello world\n',
+            status: 200,
+            error: 0,
+        },
+    },
+    {
+        name: 'typescript: type checking',
+        reqObject: {
+            language: 'typescript',
+            script: `
+                function greet(name: string): string {
+                    return \`Hello, \${name}!\`;
+                }
+                console.log(greet("TypeScript"));
+            `,
+        },
+        expectedResponse: {
+            val: 'Hello, TypeScript!\n',
+            status: 200,
+            error: 0,
+        },
+    },
+
+    // Rust test cases
+    {
+        name: 'rust: hello world',
+        reqObject: {
+            language: 'rust',
+            script: 'fn main() { println!("hello world"); }',
+        },
+        expectedResponse: {
+            val: 'hello world\n',
+            status: 200,
+            error: 0,
+        },
+    },
+    {
+        name: 'rust: print stdin',
+        reqObject: {
+            language: 'rust',
+            script: `
+                use std::io::{self, BufRead};
+
+                fn main() {
+                    let stdin = io::stdin();
+                    for line in stdin.lock().lines() {
+                        println!("{}", line.unwrap());
+                    }
+                }
+            `,
+            stdin: '1 2 3\n4 5 6',
+        },
+        expectedResponse: {
+            val: '1 2 3\n4 5 6\n',
             status: 200,
             error: 0,
         },
