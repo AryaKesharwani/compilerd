@@ -1,4 +1,5 @@
 const testCases = [
+    // cpp test cases
     {
         name: 'cpp : hello world',
         reqObject: {
@@ -41,6 +42,28 @@ const testCases = [
 
     },
     {
+        name: 'cpp : array manipulation',
+        reqObject: {
+            language: 'cpp',
+            script:
+                '#include <iostream>\n' +
+                'using namespace std;\n' +
+                'int main() {\n' +
+                '    int arr[] = {1, 2, 3, 4, 5};\n' +
+                '    for (int i = 0; i < 5; ++i) {\n' +
+                '        cout << arr[i] << " ";\n' +
+                '    }\n' +
+                '    return 0;\n' +
+                '}\n',
+        },
+        expectedResponse: {
+            val: '1 2 3 4 5 ',
+            status: 200,
+            error: 0,
+        },
+    },
+    // nodejs test cases
+    {
         name: 'nodejs : hello world',
         reqObject: {
             language: 'nodejs',
@@ -70,6 +93,8 @@ const testCases = [
             error: 0,
         },
     },
+    
+    // python test cases
     {
         name: 'python : hello world',
         reqObject: {
@@ -103,6 +128,7 @@ const testCases = [
             error: 0,
         },
     },
+    // c test cases
     {
         name: 'c : hello world',
         reqObject: {
@@ -137,6 +163,28 @@ const testCases = [
         },
         expectedResponse: {
             val: '1\n2\n3\n',
+            status: 200,
+            error: 0,
+        },
+    },
+    {
+        name: 'c : string reversal',
+        reqObject: {
+            language: 'c',
+            script:
+                '#include <stdio.h>\n' +
+                '#include <string.h>\n' +
+                'int main() {\n' +
+                '    char str[] = "hello";\n' +
+                '    int n = strlen(str);\n' +
+                '    for (int i = n-1; i >= 0; i--) {\n' +
+                '        printf("%c", str[i]);\n' +
+                '    }\n' +
+                '    return 0;\n' +
+                '}\n',
+        },
+        expectedResponse: {
+            val: 'olleh',
             status: 200,
             error: 0,
         },
@@ -206,6 +254,7 @@ const testCases = [
             error: 0,
         },
     },
+    // ruby test cases
     {
         name: 'ruby : print hello world',
         reqObject: {
@@ -230,6 +279,20 @@ const testCases = [
         },
         expectedResponse: {
             val: '10\n',
+            status: 200,
+            error: 0,
+        },
+    },
+    {
+        name: 'ruby : file reading',
+        reqObject: {
+            language: 'ruby',
+            script:
+                'File.open("test.txt", "w") { |f| f.write("Hello World") }\n' +
+                'puts File.read("test.txt")',
+        },
+        expectedResponse: {
+            val: 'Hello World\n',
             status: 200,
             error: 0,
         },
